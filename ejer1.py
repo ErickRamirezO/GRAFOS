@@ -1,15 +1,47 @@
-def busquedaProfunda(graph, node, visited, cost, sum_cost):
-    visited[node] = True
-    for neighbor in graph[node]:
-        if not visited[neighbor]:
-            sum_cost[0] += cost[(node, neighbor)]
-            busquedaProfunda(graph, neighbor, visited, cost, sum_cost)
+def busquedaProfunda(graph, nodo, visitado, costo, sumaCosto):
+	"""
+ 	Función que realiza la busqueda a Profundidad por todos los nodos del grafo
+   	Parámetros
+	_____________
+ 	graph: grafo con todos los nodos conectados entre sí
+ 	nodo: diccionario que contiene el costo de cada conexion entre los nodos del grafo
+    visitado: 
+	costo:
+    sumaCosto:
+  	Retorno
+   	____________
+	sumaCosto = Variable que contiene la suma del costo de todos los nodos en el grafo
+  	"""
+	#marcamos el nodo actual como true
+	visitado[nodo] = True
+	#bucle for que recorre todos los nodos del grafo
+	for vecino in graph[nodo]:
+		#Verificamos si el vecino del nodo ya ha sido visitado
+		if not visitado[vecino]:
+			#seguimos acumulando el costo que tiene dicho nodo
+			sumaCosto += costo[(nodo, vecino)]
+			#llamamos de nuevo a la función busquedaProfunda
+			busquedaProfunda(graph, vecino, visitado, costo, sumaCosto)
 
 def sum_costs(graph, cost):
-    visited = [False] * len(graph)
-    sum_cost = [0]
-    busquedaProfunda(graph, 0, visited, cost, sum_cost)
-    return sum_cost[0]
+	"""
+ 	Función que obtiene el valor del costo total de todos los nodos del grafo
+   	Parámetros
+	_____________
+ 	graph: grafo con todos los nodos conectados entre sí
+ 	cost: diccionario que contiene el costo de cada conexion entre los nodos del grafo
+  	Retorno
+   	____________
+	sumaCosto = Variable que contiene la suma del costo de todos los nodos en el grafo
+  	"""
+	 #inicializamos la lista "visitado" con un valor booleano "False" para cada uno de los elementos de la lista
+	visitado = [False] * len(graph)
+	#variable que contiene la suma del costo de todos los nodos del grafo y lo inicializamos en 0
+	sumaCosto = 0
+	#llamamos a la funcion busquedaProfunda para recorrer todos los nodos del grafo
+	busquedaProfunda(graph, 0, visitado, cost, sumaCosto)
+	#retornamos la suma
+	return sumaCosto
 
 def creacionGrafo():
 	"""
@@ -52,7 +84,7 @@ def creacionGrafo():
 	  4, 1)] = cost[(4, 2)] = cost[(2, 4)] = 2
 	#Imprimimos el nodo y el grafo en modo de lista de listas y en un diccionario para los costos
 	print(graph, cost)
-	
+	#retornamos el grafo y el costo
 	return graph, cost
 
 
